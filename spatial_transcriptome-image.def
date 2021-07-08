@@ -1,11 +1,15 @@
-Bootstrap: docker
-From: quay.io/biocontainers/star:2.5.3a--0
+#Bootstrap: docker
+#From: quay.io/biocontainers/star:2.5.3a--0
+
+#Bootstrap: docker
+#From: quay.io/biocontainers/samtools:1.4.1--0
+
+#Bootstrap: docker
+#From: python:3.6
 
 Bootstrap: docker
-From: quay.io/biocontainers/samtools:1.4.1--0
+From: continuumio/miniconda3
 
-Bootstrap: docker
-From: python:3.6
 
 %post
     export DEBIAN_FRONTEND=noninteractive
@@ -20,10 +24,18 @@ From: python:3.6
     libz-dev \
     build-essential \
     git
-    apt-get install -y software-properties-common
     
+    # conda install
+    conda install -y python=3.6
+    conda install -y -c bioconda samtools=1.4.1 openssl=1.0
+    conda install -y -c bioconda star=2.5.3a-0
+    #conda update --all
+
+    # pip install
+
+
     pip install numpy
-    
+  
     pip install --upgrade setuptools
     
     git clone https://github.com/johannesnicolaus/singlecell.git
